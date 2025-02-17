@@ -105,8 +105,10 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 This project is licensed under the MIT License.
 
 ## Contact
-For any queries or support, please contact [psumeet08072004@gmail.com].
-For any queries or support, please contact [rishabh.150305@gmail.com].
+For any queries or support, please contact :
+### psumeet08072004@gmail.com 
+### rishabh.150305@gmail.com
+### riyasolanki525@gmail.com
 
 ---
 
