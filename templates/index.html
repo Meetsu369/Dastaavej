@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dastaavej - Document Application Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Dastaavej</h1>
+            <div id="navLinks" class="hidden">
+                <button onclick="logout()" class="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">Logout</button>
+            </div>
+            <div id="authLinks" class="space-x-4">
+                <button onclick="showLoginForm()" class="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">Login</button>
+                <button onclick="showRegistrationForm()" class="bg-green-500 hover:bg-green-700 px-4 py-2 rounded">Register</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Authentication Forms -->
+        <div id="loginForm" class="hidden max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-2xl font-bold mb-6">Login</h2>
+            <form onsubmit="login(event)" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Aadhaar Number</label>
+                    <input type="text" name="aadhaar_number" required
+                           class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" name="password" required
+                           class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Login
+                </button>
+            </form>
+        </div>
+
+        <div id="registrationForm" class="hidden max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-2xl font-bold mb-6">Register</h2>
+            <form onsubmit="register(event)" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Aadhaar Number</label>
+                    <input type="text" name="aadhaar_number" required pattern="[0-9]{12}"
+                           class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" name="email" required
+                           class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Phone</label>
+                    <input type="tel" name="phone" required pattern="[0-9]{10}"
+                           class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" name="password" required
+                           class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button type="submit" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    Register
+                </button>
+            </form>
+        </div>
+
+        <!-- Application Dashboard -->
+        <div id="dashboard" class="hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- New Application Section -->
+                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8">
+                    <h2 class="text-2xl font-bold mb-6">New Application</h2>
+                    <form id="applicationForm" onsubmit="submitApplication(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Application Type</label>
+                            <select name="application_type" required
+                                    class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="passport">Passport</option>
+                                <option value="pan">PAN Card</option>
+                            </select>
+                        </div>
+
+                        <!-- Document Upload Section -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">ID Proof</label>
+                                <input type="file" name="id_proof" required accept=".pdf,.jpg,.jpeg,.png"
+                                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Photo</label>
+                                <input type="file" name="photo" required accept=".jpg,.jpeg,.png"
+                                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Address Proof</label>
+                                <input type="file" name="address_proof" required accept=".pdf,.jpg,.jpeg,.png"
+                                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Submit Application
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Applications List -->
+                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8">
+                    <h2 class="text-2xl font-bold mb-6">My Applications</h2>
+                    <div id="applicationsList" class="space-y-4">
+                        <!-- Applications will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Panel (visible only for admin users) -->
+            <div id="adminPanel" class="hidden mt-8 bg-white shadow-md rounded px-8 pt-6 pb-8">
+                <h2 class="text-2xl font-bold mb-6">Admin Panel</h2>
+                <div id="pendingApplications" class="space-y-4">
+                    <!-- Pending applications will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let authToken = localStorage.getItem('authToken');
+        let userRole = localStorage.getItem('userRole');
+
+        // Show/hide forms
+        function showLoginForm() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registrationForm').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+        }
+
+        function showRegistrationForm() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registrationForm').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registrationForm').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('authLinks').classList.add('hidden');
+            document.getElementById('navLinks').classList.remove('hidden');
+            
+            if (userRole === 'admin') {
+                document.getElementById('adminPanel').classList.remove('hidden');
+                loadPendingApplications();
+            }
+            
+            loadUserApplications();
+        }
+
+        // Authentication functions
+        async function register(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('Registration successful! Please login.');
+                    showLoginForm();
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                alert('Registration failed. Please try again.');
+            }
+        }
+
+        async function login(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('userRole', data.role);
+                    authToken = data.token;
+                    userRole = data.role;
+                    showDashboard();
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                alert('Login failed. Please try again.');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userRole');
+            authToken = null;
+            userRole = null;
+            showLoginForm();
+        }
+
+        // Application functions
+        async function submitApplication(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            try {
+                const response = await fetch('/api/applications/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': authToken
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert(`Application submitted successfully! Application ID: ${data.application_id}`);
+                    event.target.reset();
+                    loadUserApplications();
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                alert('Application submission failed. Please try again.');
+            }
+        }
+
+        async function loadUserApplications() {
+            try {
+                const response = await fetch('/api/applications', {
+                    headers: {
+                        'Authorization': authToken
+                    }
+                });
+                
+                const applications = await response.json();
+                
+                const applicationsList = document.getElementById('applicationsList');
+                applicationsList.innerHTML = applications.map(app => `
+                    <div class="border p-4 rounded">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold">${app.application_type.toUpperCase()}</h3>
+                                <p class="text-sm text-gray-600">Status: ${app.status}</p>
+                                <p class="text-sm text-gray-600">Applied: ${new Date(app.created_at).toLocaleDateString()}</p>
+                            </div>
+                            <button onclick="viewApplication(${app.id})" 
+                                    class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                                View Details
+                            </button>
+                        </div>
+                        ${app.rejection_reason ? `
+                            <div class="mt-2 text-red-600">
+                                Reason for rejection: ${app.rejection_reason}
+                            </div>
+                        ` : ''}
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load applications:', error);
+            }
+        }
+
+        // Admin functions
+        async function loadPendingApplications() {
+            if (userRole !== 'admin') return;
+            
+            try {
+                const response = await fetch('/api/applications/pending', {
+                    headers: {
+                        'Authorization': authToken
+                    }
+                });
+                
+                const applications = await response.json();
+                
+                const pendingApplications = document.getElementById('pendingApplications');
+                pendingApplications.innerHTML = applications.map(app => `
+                    <div class="border p-4 rounded">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold">${app.application_type.toUpperCase()}</h3>
+                                <p class="text-sm text-gray-600">Applicant: ${app.user_email}</p>
+                                <p class="text-sm text-gray-600">Applied: ${new Date(app.created_at).toLocaleDateString()}</p>
+                            </div>
+                            <div class="space-x-2">
+                                <button onclick="updateStatus(${app.id}, 'approved')" 
+                                        class="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded">
+                                    Approve
+                                </button>
+                                <button onclick="showRejectionForm(${app.id})" 
+                                        class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded">
+                                    Reject
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load pending applications:', error);
+            }
+        }
+
+        // Initialize
+        if (authToken) {
+            showDashboard();
+        } else {
+            showLoginForm();
+        }
+    </script>
+</body>
+</html>
